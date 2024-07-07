@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="lightMode">@android:color/background_light</color>
+    <color name="darkMode">@android:color/background_dark</color>
+
+    <color name="community_placeholder">#CECECE</color>
+
+
+    <color name="primary_theme_disabled_color">@color/green_light</color>
+    <color name="primary_theme_enabled_color">#8FACFF</color>
+
+    <color name="primary_theme_book_appointment_color">@color/book_aptmt_light</color>
+    <color name="primary_theme_book_appointment_color2">@color/book_aptmt2_light</color>
+
+
+    <color name="primary_theme_bottom_nav_color">#779BFF</color>
+
+    <color name="primary_theme_schedule_color">@color/schedule_light</color>
+    <color name="primary_theme_schedule_color_2">@color/schedule_dark</color>
+
+
+    <!--    <color name="primary_theme_schedule_color_2">@color/schedule_dark</color>-->
+
+
+    <color name="green_light">#E9F5FF</color>
+
+    <color name="schedule_light">#B5C8FF</color>
+    <color name="schedule_dark">#322F45</color>
+
+
+    <color name="upcoming_apt_light">#00FF0A</color>
+    <color name="completed_apt_light">#2962FF</color>
+    <color name="cancelled_apt_light">#FF0000</color>
+
+    <color name="custom_checked_state_mode">#1E88E5</color>
+
+
+    <color name="bluish_gray">#FF3B4557</color>
+
+    <color name="calendar_bg_color">#8EB2F1</color>
+
+
+    <color name="custom_button">#005488</color>
+
+    <color name="custom_more_button">#00897B</color>
+
+
+    <color name="book_aptmt_light">#E0C3FC</color>
+    <color name="book_aptmt2_light">#8EC5FC</color>
+    <color name="book_aptmt_dark">#2b5876</color>
+    <color name="book_aptmt2_dark">#4e4376</color>
+
+    <color name="green_light2">#A9D9FF</color>
+    <color name="purple_light">#C5A3FF</color>
+    <color name="material_button">#695cd5</color>
+
+    <!--    bottom nav colors -->
+    <color name="light_purple">#A9D9FF</color>
+    <color name="dark_grey">#322F45</color>
+
+
+    <color name="receiver_message_color">#A9D9FF</color>
+    <color name="sender_message_color">#80CBC4</color>
+
+</resources>

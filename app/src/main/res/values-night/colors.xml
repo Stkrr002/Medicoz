@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_theme_bottom_nav_color">@color/dark_grey</color>
+
+    <color name="primary_theme_book_appointment_color">@color/book_aptmt_dark</color>
+    <color name="primary_theme_book_appointment_color2">@color/book_aptmt2_dark</color>
+    <color name="primary_theme_schedule_color">@color/schedule_dark</color>
+    <color name="primary_theme_schedule_color_2">@color/schedule_light</color>
+
+
+
+    <color name="darkMode">@android:color/background_light</color>
+    <color name="lightMode">@android:color/background_dark</color>
+
+    <color name="custom_checked_state_mode">#00e676</color>
+    <color name="custom_button">#00e676</color>
+
+
+</resources>
