@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         DependencyProvider.provideImpl(
             homeFeatureApi = HomeFeatureImpl(),
-            communityFeatureApi = CommunityFeatureImpl(),
+            communityFeatureApi = CommunityFeatureImpl(MedicoApp.getInstance()),
             authFeatureApi = AuthFeatureImpl(authUseCase)
         )
 

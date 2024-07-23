@@ -134,10 +134,10 @@ dependencies {
     implementation("com.github.skydoves:balloon-compose:1.5.2")
 
    //medicomm app
-    implementation("com.github.alpharays05:MedComm:0.0.1-new-comm-release")
+    implementation("com.github.techalphagama:MedComm:0.1.1-release")
 
     //alaskaGemSdk
-    implementation("com.github.alpharays05:AlaskaSDK:0.0.4")
+    implementation("com.github.techalphagama:alaskasdk:0.1.0-release")
 
     //Dagger - Hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
