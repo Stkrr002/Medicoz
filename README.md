@@ -1,4 +1,4 @@
-# White Label Solution for Hospitals and Clinics
+# Medicoz - White Label Solution for Hospitals and Clinics with Power of AI
 
 ## Project Overview
 
@@ -46,13 +46,35 @@ To get started with this solution:
 2. We will assist in integrating key features, including appointment scheduling, patient records, and billing systems.
 3. Benefit from a fully branded app for your hospital or clinic while engaging patients and doctors with our community platforms.
 
----
+
+### Application previews:
+ 
+ - **Medico - Main App(Appointment list, Appointment details and patient history, live meet using jitsi, appointment schedule)**
+
+ ![IMG_20240914_081157](https://github.com/user-attachments/assets/10515d6b-2eed-4ea3-a6b5-22d107c1af70)
+
+ - **Medico - community(Post,profile,chat)**
+
+ ![IMG_20240914_080912](https://github.com/user-attachments/assets/b8809610-654d-4254-9acb-aea76da80fa1)
+
+ - **Medris- Ai assistant gemini powered- helps with medicine infos**
+   
+![IMG_20240914_081924](https://github.com/user-attachments/assets/748c1581-9911-428f-91c6-3e6f6f27f619)
+
+------------------
 
 ### Contact
 For more information, contact us at: www.linkedin.com/in/stkrr002
 
-### Application previews:
-![Screenshot_2024-09-14-07-41-13-18_544399a0655963f6a16960ab2530bcf4](https://github.com/user-attachments/assets/69bcb88a-bf4c-4833-aa83-909191898335) ![Screenshot_2024-09-14-07-41-27-26_544399a0655963f6a16960ab2530bcf4](https://github.com/user-attachments/assets/c584d463-502a-4afc-9562-52c06024429c)  ![Screenshot_2024-09-14-07-43-13-93_544399a0655963f6a16960ab2530bcf4](https://github.com/user-attachments/assets/61b1eeab-cc59-4466-a265-b6879d863d59)
+
+
+
+   
+
+
+
+
+ 
 
 
 
