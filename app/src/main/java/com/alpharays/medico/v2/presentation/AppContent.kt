@@ -47,55 +47,11 @@ fun AppContent() {
 
 @Composable
 fun BottomBar(navController: NavController, tabs: Array<BottomTabs>) {
-
-
     val routes = remember { BottomTabs.values().map { it.route } }
-
-
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry.value?.destination?.route
-//    val oldBottomNavColor = Color(0xFFB5C8FF)
     val newBottomNavColor = Color(0xFFF6F0FF)
-
-
-
-
-
-
-
     if (currentDestination in routes) {
-
-        /*
-        BottomNavigation(
-            Modifier.navigationBarsHeight(additional = 56.dp)
-        ) {
-            tabs.forEach { tab ->
-                BottomNavigationItem(
-                    icon = { Icon(painterResource(tab.icon), contentDescription = null) },
-                    label = { Text(stringResource(tab.title).uppercase(Locale.getDefault())) },
-                    selected = currentRoute == tab.route,
-                    onClick = {
-                        if (tab.route != currentRoute) {
-                            navController.navigate(tab.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    },
-                    alwaysShowLabel = false,
-                    selectedContentColor = MaterialTheme.colors.secondary,
-                    unselectedContentColor = LocalContentColor.current,
-                    modifier = Modifier.navigationBarsPadding()
-                )
-            }
-        }
-
-         */
-
-
         BottomAppBar(
             modifier = Modifier
                 .padding(5.dp, 0.dp, 5.dp, 5.dp)
