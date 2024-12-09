@@ -5,8 +5,6 @@ import com.alpharays.alaskagemsdk.network.ResponseHandler
 import com.alpharays.medico.data.source.remote.ApiServices
 import com.alpharays.medico.data.source.repo_impl.AuthRepositoryImpl
 import com.alpharays.medico.data.source.repo_impl.HomeRepositoryImpl
-import com.alpharays.medico.data.source.room.MedicoDao
-import com.alpharays.medico.data.source.room.MedicoDatabase
 import com.alpharays.medico.domain.repository.AuthRepository
 import com.alpharays.medico.domain.repository.HomeRepository
 import com.alpharays.medico.domain.usecase.AuthUseCase
@@ -72,22 +70,15 @@ object MedicoAppModule {
         return AuthRepositoryImpl(apiServices, responseHandler)
     }
 
-    @Provides
-    @Singleton
-    fun provideMedicoDao(
-        context: Context,
-    ): MedicoDao {
-        return MedicoDatabase.getDatabase(context).medicoDao()
-    }
+
 
     @Provides
     @Singleton
     fun provideHomeRepository(
         apiServices: ApiServices,
-        medicoDao: MedicoDao,
-        responseHandler: ResponseHandler,
+        responseHandler: ResponseHandler
     ): HomeRepository {
-        return HomeRepositoryImpl(apiServices, responseHandler, medicoDao)
+        return HomeRepositoryImpl(apiServices, responseHandler)
     }
 
     @Provides

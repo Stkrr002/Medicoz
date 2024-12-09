@@ -2,12 +2,9 @@ package com.alpharays.medico.data.di
 
 import android.content.Context
 import com.alpharays.alaskagemsdk.network.ResponseHandler
-import com.alpharays.medico.MedicoApp
 import com.alpharays.medico.data.source.remote.ApiServices
 import com.alpharays.medico.data.source.repo_impl.AuthRepositoryImpl
 import com.alpharays.medico.data.source.repo_impl.HomeRepositoryImpl
-import com.alpharays.medico.data.source.room.MedicoDao
-import com.alpharays.medico.data.source.room.MedicoDatabase
 import com.alpharays.medico.domain.usecase.AuthUseCase
 import com.alpharays.medico.domain.usecase.HomeScreenUseCase
 import com.alpharays.medico.medico_utils.MedicoConstants.API_SAFE_KEY
@@ -89,16 +86,7 @@ class MedicoInjector {
     }
 
 
-    private lateinit var medicoDao: MedicoDao
-    private fun getMedicoDao(): MedicoDao {
-        if (!::context.isInitialized) {
-            context = MedicoApp.getInstance()
-        }
-        if (!::medicoDao.isInitialized) {
-            medicoDao = MedicoDatabase.getDatabase(context).medicoDao()
-        }
-        return medicoDao
-    }
+
 
 
     /**
@@ -124,8 +112,7 @@ class MedicoInjector {
         if (!::homeUseCase.isInitialized) {
             val apiServices = getApiServices()
             val responseHandler = getResponseHandler()
-            val dao = getMedicoDao()
-            val impl = HomeRepositoryImpl(apiServices, responseHandler, dao)
+            val impl = HomeRepositoryImpl(apiServices, responseHandler)
             homeUseCase = HomeScreenUseCase(impl)
         }
         return homeUseCase

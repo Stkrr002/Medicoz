@@ -130,7 +130,7 @@ dependencies {
     // tool tip
     implementation("com.github.skydoves:balloon-compose:1.5.2")
 
-   //medicomm app
+    //medicomm app
     implementation("com.github.techalphagama:MedComm:0.1.1-release")
 
     //alaskaGemSdk
@@ -143,7 +143,7 @@ dependencies {
 
 
     //Medris sdk
-    implementation("com.github.techalphagama:MedJarvis:1.0.0-release")
+    implementation("com.github.techalphagama:MedJarvis:1.0.2-release")
 
 }
 

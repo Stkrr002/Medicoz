@@ -3,7 +3,6 @@ package com.alpharays.medico.presentation.home_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alpharays.alaskagemsdk.network.ResponseResult
-import com.alpharays.medico.data.source.room.MedicoAppointmentTable
 import com.alpharays.medico.domain.model.homescreen.currappointment.Appointment
 import com.alpharays.medico.domain.model.homescreen.currappointment.AppointmentData
 import com.alpharays.medico.domain.model.homescreen.currappointment.AppointmentDetailsResponse
@@ -67,7 +66,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         token = MedicoUtils.getAuthToken()
-        getCachedAppointmentList()
     }
 
     fun updateNetworkStatus(status: ConnectivityObserver.Status) {
@@ -96,10 +94,7 @@ class HomeViewModel @Inject constructor(
 
                     is ResponseResult.Success -> {
                         val state = HomeAppointmentsState(data = result.data)
-                        val appointmentList = result.data?.data?.get(0)?.appointmentList
-                        appointmentList?.let {
-                            setAppointmentListInCache(appointmentList)
-                        }
+
                         println("remote call count : $remoteCallCount")
                         _remoteHomeAppointmentListState.value = state
                     }
@@ -134,31 +129,8 @@ class HomeViewModel @Inject constructor(
 
 
     //  ************   room db - cached data   ************
-    private fun getCachedAppointmentList() {
-        homeScreenUseCase.getCachedAppointments().onEach {
-            if(it.data != null){
-                val appointmentList = it.data.data
-                if(appointmentList.toList().isNotEmpty()){
-                    val appointmentListData: ArrayList<AppointmentData> = ArrayList()
-                    appointmentListData.add(AppointmentData(appointmentList))
-                    val response = AppointmentDetailsResponse(data = appointmentListData.toList())
-                    val state = HomeAppointmentsState(data = response)
-                    _cachedAppointmentListState.value = state
-                }
-                else{
-                    _cachedAppointmentListState.value = _remoteHomeAppointmentListState.value
-                }
-            }
-            else{
-                _cachedAppointmentListState.value = _remoteHomeAppointmentListState.value
-            }
-        }.launchIn(viewModelScope)
-    }
 
-    private fun setAppointmentListInCache(appointmentList: List<Appointment>) {
-        val appointments = MedicoAppointmentTable(data = appointmentList)
-        homeScreenUseCase.setCachedAppointments(appointments).launchIn(viewModelScope)
-    }
+
 }
 
 
