@@ -143,7 +143,7 @@ dependencies {
 
 
     //Medris sdk
-    implementation("com.github.techalphagama:MedJarvis:1.0.1-release")
+    implementation("com.github.techalphagama:MedJarvis:1.0.2-release")
 
 }
 
