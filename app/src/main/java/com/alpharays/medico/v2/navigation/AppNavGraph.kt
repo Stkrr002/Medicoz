@@ -51,6 +51,12 @@ fun AppNavGraph(
             modifier
         )
 
+        register(
+            DependencyProvider.medJarvisFeature(),
+            navController,
+            modifier
+        )
+
     }
 }
 

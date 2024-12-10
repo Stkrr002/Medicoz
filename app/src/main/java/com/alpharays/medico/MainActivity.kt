@@ -20,6 +20,7 @@ import com.alpharays.medico.v2.modules.home.navigation.HomeFeatureImpl
 import com.alpharays.medico.v2.presentation.AppContent
 import com.alpharays.mymedicommfma.communityv2.MedCommRouter
 import com.alpharays.mymedicommfma.communityv2.navigation.CommunityFeatureImpl
+import com.alpharays.mymedjarvisfma.integration.MedJarvisFeatureImpl
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         DependencyProvider.provideImpl(
             homeFeatureApi = HomeFeatureImpl(),
             communityFeatureApi = CommunityFeatureImpl(MedicoApp.getInstance()),
-            authFeatureApi = AuthFeatureImpl(authUseCase)
+            authFeatureApi = AuthFeatureImpl(authUseCase),
+            medJarvisFeatureApi = MedJarvisFeatureImpl()
         )
 
         DependencyProviderProfile.provideImpl(
