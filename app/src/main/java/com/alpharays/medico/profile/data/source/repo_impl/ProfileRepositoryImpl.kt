@@ -3,8 +3,6 @@ package com.alpharays.medico.profile.data.source.repo_impl
 import com.alpharays.alaskagemsdk.network.ResponseHandler
 import com.alpharays.alaskagemsdk.network.ResponseResult
 import com.alpharays.medico.profile.data.source.remote.ProfileApiServices
-import com.alpharays.medico.profile.data.source.room.MedicoDao
-import com.alpharays.medico.profile.data.source.room.MedicoPatientProfileTable
 import com.alpharays.medico.profile.domain.model.profilescreen.Profile
 import com.alpharays.medico.profile.domain.model.profilescreen.userposts.UserCommunityPostsParent
 import com.alpharays.medico.profile.domain.repository.ProfileRepository
@@ -16,7 +14,6 @@ import javax.inject.Inject
 class ProfileRepositoryImpl @Inject constructor(
     private val profileApiServices: ProfileApiServices,
     private val responseHandler: ResponseHandler,
-    private val medicoDao: MedicoDao,
 ) : ProfileRepository {
     override suspend fun getProfileInfo(token: String): ResponseResult<Profile> =
         withContext(Dispatchers.IO) {
@@ -60,18 +57,4 @@ class ProfileRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun setCachedProfile(profile: MedicoPatientProfileTable) {
-        withContext(Dispatchers.IO) {
-            medicoDao.setPatientProfile(profile)
-        }
-    }
-
-    override suspend fun getCachedProfile(): MedicoPatientProfileTable? {
-        return try {
-            medicoDao.getPatientProfile()
-        } catch (e: Exception) {
-            println(e.printStackTrace())
-            null
-        }
-    }
 }

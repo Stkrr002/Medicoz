@@ -7,7 +7,6 @@ import com.alpharays.medico.profile.profile_utils.util.ProfileConstants.SOMETHIN
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import com.alpharays.medico.profile.data.source.room.MedicoPatientProfileTable as PatientTable
 import com.alpharays.medico.profile.domain.model.profilescreen.userposts.UserCommunityPostsParent as PostsResponse
 
 class ProfileScreenUseCase @Inject constructor(
@@ -47,31 +46,5 @@ class ProfileScreenUseCase @Inject constructor(
 
 
     // cached data
-    fun setCachedProfile(patientTable: PatientTable): Flow<Any> = flow {
-        try {
-            profileRepository.setCachedProfile(patientTable)
-        } catch (e: Exception) {
-            println(e.printStackTrace())
-        }
-    }
 
-    fun getCachedProfile(): Flow<ProfileCachedData> = flow {
-        val response = try {
-            val response = ProfileCachedData(data = profileRepository.getCachedProfile())
-            response
-        } catch (e: Exception) {
-            val response = ProfileCachedData(error = e.message)
-            response
-        }
-        emit(response)
-    }
-
-    suspend fun getCurrentCachedProfile(): PatientTable? {
-        return profileRepository.getCachedProfile()
-    }
 }
-
-data class ProfileCachedData(
-    val data: PatientTable? = null,
-    val error: String? = null,
-)

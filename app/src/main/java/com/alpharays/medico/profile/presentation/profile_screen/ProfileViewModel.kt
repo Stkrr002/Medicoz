@@ -4,7 +4,6 @@ package com.alpharays.medico.profile.presentation.profile_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alpharays.alaskagemsdk.network.ResponseResult
-import com.alpharays.medico.profile.data.source.room.MedicoPatientProfileTable
 import com.alpharays.medico.profile.domain.model.profilescreen.Profile
 import com.alpharays.medico.profile.domain.model.profilescreen.userposts.UserCommunityPostsParent
 import com.alpharays.medico.profile.domain.usecase.ProfileScreenUseCase
@@ -41,8 +40,6 @@ class ProfileViewModel @Inject constructor(
     val cachedProfilePostsStateFlow: StateFlow<ProfilePostsState> = _cachedProfilePostsState.asStateFlow()
 
 
-    private val _getCurrentCachedProfile = MutableStateFlow(MedicoPatientProfileTable())
-    val getCurrentCachedProfile: StateFlow<MedicoPatientProfileTable> = _getCurrentCachedProfile.asStateFlow()
 
     private val _networkStatus = MutableStateFlow(ConnectivityObserver.Status.Lost)
     val networkStatus: StateFlow<ConnectivityObserver.Status> = _networkStatus
@@ -92,7 +89,6 @@ class ProfileViewModel @Inject constructor(
     init {
         token = MedicoUtils.getAuthToken()
         docId = MedicoUtils.getDocId()
-        getCachedProfileInfo()
     }
 
     fun updateNetworkStatus(status: ConnectivityObserver.Status) {
@@ -122,13 +118,6 @@ class ProfileViewModel @Inject constructor(
                 }
 
                 is ResponseResult.Success -> {
-                    val profile = result.data
-                    getCurrentCachedProfile()
-                    val currentProfile = _getCurrentCachedProfile.value
-                    profile?.let {
-                        val updatedProfile = currentProfile.copy(profile = profile)
-                        setProfileInfoInCache(updatedProfile)
-                    }
                     _remoteProfileInfoState.value = ProfileState(profileInfo = result.data)
                 }
 
@@ -147,13 +136,6 @@ class ProfileViewModel @Inject constructor(
                 }
 
                 is ResponseResult.Success -> {
-                    val posts = result.data?.myPostsData
-                    getCurrentCachedProfile()
-//                    val currentProfile = _getCurrentCachedProfile.value : TODO : when posts was being saved, profile became null & vice versa - fix it
-//                    posts?.let {
-//                        val updatedProfile = currentProfile.copy(posts = posts)
-//                        setProfileInfoInCache(updatedProfile)
-//                    }
                     _remoteProfilePostsState.value = ProfilePostsState(profilePosts = result.data)
                 }
 
@@ -165,47 +147,7 @@ class ProfileViewModel @Inject constructor(
     }
 
 
-    //  ************   room db - cached data   ************
-    private fun setProfileInfoInCache(medicoPatientProfileTable: MedicoPatientProfileTable){
-        profileScreenUseCase.setCachedProfile(medicoPatientProfileTable).launchIn(viewModelScope)
-    }
 
-    private fun getCachedProfileInfo() {
-        profileScreenUseCase.getCachedProfile().onEach{
-            if(it.data != null){
-                val profileTable = it.data
-                if(profileTable.profile != null){
-                    val profile = profileTable.profile
-                    _cachedProfileInfoState.value = ProfileState(profileInfo = profile)
-                }
-                else{
-                    _cachedProfileInfoState.value = _remoteProfileInfoState.value
-                }
-
-                if(profileTable.posts.isNotEmpty()){
-                    val posts = profileTable.posts
-                    val postData = UserCommunityPostsParent(myPostsData = posts)
-                    _cachedProfilePostsState.value = ProfilePostsState(profilePosts = postData)
-                }
-                else{
-                    _cachedProfilePostsState.value = _remoteProfilePostsState.value
-                }
-            }
-            else{
-                _cachedProfileInfoState.value = _remoteProfileInfoState.value
-                _cachedProfilePostsState.value = _remoteProfilePostsState.value
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun getCurrentCachedProfile() {
-        viewModelScope.launch {
-            val response = profileScreenUseCase.getCurrentCachedProfile()
-            response?.let {
-                _getCurrentCachedProfile.value = response
-            }
-        }
-    }
 }
 
 data class ProfileState(
