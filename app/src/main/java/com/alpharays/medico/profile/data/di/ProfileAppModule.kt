@@ -4,8 +4,6 @@ import android.content.Context
 import com.alpharays.alaskagemsdk.network.ResponseHandler
 import com.alpharays.medico.profile.data.source.remote.ProfileApiServices
 import com.alpharays.medico.profile.data.source.repo_impl.ProfileRepositoryImpl
-import com.alpharays.medico.profile.data.source.room.MedicoDao
-import com.alpharays.medico.profile.data.source.room.MedicoDatabase
 import com.alpharays.medico.profile.domain.repository.ProfileRepository
 import com.alpharays.mymedicommfma.common.connectivity.NetworkConnectivityObserver
 import com.alpharays.mymedicommfma.communityv2.MedCommRouter.API_SAFE_KEY
@@ -59,23 +57,5 @@ object ProfileAppModule {
             .create(ProfileApiServices::class.java)
     }
 
-
-    @Provides
-    @Singleton
-    fun provideMedicoDao(
-        context: Context,
-    ): MedicoDao {
-        return MedicoDatabase.getDatabase(context).medicoDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideHomeRepository(
-        apiServices: ProfileApiServices,
-        medicoDao: MedicoDao,
-        responseHandler: ResponseHandler,
-    ): ProfileRepository {
-        return ProfileRepositoryImpl(apiServices, responseHandler, medicoDao)
-    }
 
 }

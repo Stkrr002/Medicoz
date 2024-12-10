@@ -5,8 +5,6 @@ import com.alpharays.alaskagemsdk.network.ResponseHandler
 import com.alpharays.medico.MedicoApp
 import com.alpharays.medico.profile.data.source.remote.ProfileApiServices
 import com.alpharays.medico.profile.data.source.repo_impl.ProfileRepositoryImpl
-import com.alpharays.medico.profile.data.source.room.MedicoDao
-import com.alpharays.medico.profile.data.source.room.MedicoDatabase
 import com.alpharays.medico.profile.domain.usecase.ProfileScreenUseCase
 import com.alpharays.medico.profile.profile_utils.util.ProfileConstants.API_SAFE_KEY
 import com.alpharays.medico.profile.profile_utils.util.ProfileConstants.API_SAFE_KEY_VALUE
@@ -87,16 +85,6 @@ class MedicoProfileInjector {
     }
 
 
-    private lateinit var medicoDao: MedicoDao
-    private fun getMedicoDao(): MedicoDao {
-        if (!::context.isInitialized) {
-            context = MedicoApp.getInstance()
-        }
-        if (!::medicoDao.isInitialized) {
-            medicoDao = MedicoDatabase.getDatabase(context).medicoDao()
-        }
-        return medicoDao
-    }
 
     /**
      * Profile Screen and its useCase and RepositoryImpl
@@ -106,8 +94,7 @@ class MedicoProfileInjector {
         if (!::profileUseCase.isInitialized) {
             val apiServices = getProfileApiServices()
             val responseHandler = getResponseHandler()
-            val dao = getMedicoDao()
-            val impl = ProfileRepositoryImpl(apiServices, responseHandler, dao)
+            val impl = ProfileRepositoryImpl(apiServices, responseHandler)
             profileUseCase = ProfileScreenUseCase(impl)
         }
         return profileUseCase
