@@ -1,7 +1,13 @@
 package com.alpharays.medico.v2.presentation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.NavigationBarItem
@@ -9,17 +15,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.alpharays.medico.R
 import com.alpharays.medico.presentation.common.BottomBarNavItemIcon
 import com.alpharays.medico.presentation.theme.MedicoTheme
 import com.alpharays.medico.presentation.theme.backgroundWhite
@@ -33,6 +44,9 @@ fun AppContent() {
             val tabs = remember { BottomTabs.entries.toTypedArray() }
             val navController = rememberNavController()
             Scaffold(
+                topBar = {
+                    TopAppBar(navController)
+                },
                 containerColor = backgroundWhite,
                 bottomBar = { BottomBar(navController = navController, tabs) }
             ) { innerPaddingModifier ->
@@ -46,8 +60,38 @@ fun AppContent() {
 }
 
 @Composable
+fun TopAppBar(navController: NavController) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Medico", style = TextStyle(
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+        )
+        Image(
+            modifier = Modifier
+                .clickable {
+                    navController.navigate("jarvis_screen")
+                }
+                .size(40.dp),
+            painter = painterResource(id = R.drawable.ic_robot_doctor),
+            contentDescription = "AI Consultant",
+        )
+    }
+
+}
+
+
+@Composable
 fun BottomBar(navController: NavController, tabs: Array<BottomTabs>) {
-    val routes = remember { BottomTabs.values().map { it.route } }
+    val routes = remember { BottomTabs.entries.map { it.route } }
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry.value?.destination?.route
     val newBottomNavColor = Color(0xFFF6F0FF)

@@ -314,7 +314,6 @@ fun ComposableAppointments(
                 .clickable {
                     MedicoToast.showToast(rowContext, "Adding new appointment")
                     navController.navigate(AppScreens.AppointmentStartScreen.route)
-                   // navController.navigate("jarvis_screen")
                 },
             imageVector = Icons.Default.Add,
             contentDescription = "Add new appointment",
