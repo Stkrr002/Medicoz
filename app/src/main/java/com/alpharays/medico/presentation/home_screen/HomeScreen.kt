@@ -88,6 +88,7 @@ import com.alpharays.medico.medico_utils.MedicoUtils.Companion.updateBalloonCoun
 import com.alpharays.medico.medico_utils.connectivity.ConnectivityObserver
 import com.alpharays.medico.medico_utils.getMedicoViewModel
 import com.alpharays.medico.presentation.common.CustomScaffold
+import com.alpharays.medico.presentation.common.TopAppBar
 import com.skydoves.balloon.compose.Balloon
 import kotlinx.coroutines.delay
 
@@ -105,7 +106,11 @@ fun HomeScreen(navController: NavController, modifier: Modifier) {
     }
 
     Surface(modifier = modifier.fillMaxSize()) {
-        CustomScaffold(navController = navController) { innerPadding ->
+        CustomScaffold(navController = navController, isTopBarPresent = true, topBarContent = {
+            TopAppBar(
+                navController = navController
+            )
+        }) { innerPadding ->
             HomeAppointmentScreen(
                 navController,
                 homeViewModel,
