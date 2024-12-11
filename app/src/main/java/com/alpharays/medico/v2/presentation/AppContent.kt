@@ -44,9 +44,6 @@ fun AppContent() {
             val tabs = remember { BottomTabs.entries.toTypedArray() }
             val navController = rememberNavController()
             Scaffold(
-                topBar = {
-                    TopAppBar(navController)
-                },
                 containerColor = backgroundWhite,
                 bottomBar = { BottomBar(navController = navController, tabs) }
             ) { innerPaddingModifier ->
@@ -58,36 +55,6 @@ fun AppContent() {
         }
     }
 }
-
-@Composable
-fun TopAppBar(navController: NavController) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = "Medico", style = TextStyle(
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Monospace
-            )
-        )
-        Image(
-            modifier = Modifier
-                .clickable {
-                    navController.navigate("jarvis_screen")
-                }
-                .size(40.dp),
-            painter = painterResource(id = R.drawable.ic_robot_doctor),
-            contentDescription = "AI Consultant",
-        )
-    }
-
-}
-
 
 @Composable
 fun BottomBar(navController: NavController, tabs: Array<BottomTabs>) {
