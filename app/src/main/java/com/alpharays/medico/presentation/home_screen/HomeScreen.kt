@@ -106,7 +106,13 @@ fun HomeScreen(navController: NavController, modifier: Modifier) {
 
     Surface(modifier = modifier.fillMaxSize()) {
         CustomScaffold(navController = navController) { innerPadding ->
-            HomeAppointmentScreen(navController, homeViewModel, Modifier, innerPadding, connectivityStatus)
+            HomeAppointmentScreen(
+                navController,
+                homeViewModel,
+                Modifier,
+                innerPadding,
+                connectivityStatus
+            )
         }
     }
 }
@@ -131,8 +137,8 @@ fun HomeAppointmentScreen(
 
     val cachedAppointmentList by homeViewModel.combinedAppointmentListState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(cachedAppointmentList){
-        with(cachedAppointmentList){
+    LaunchedEffect(cachedAppointmentList) {
+        with(cachedAppointmentList) {
 //            if (isLoading != null && isLoading == true) {
 //                CustomToast.showToast(context, "Loading appointments")
 //                return@LaunchedEffect
@@ -166,50 +172,21 @@ fun HomeAppointmentScreen(
     }
 
 
-    /*
-
-    LaunchedEffect(homeAppointmentListResponse) {
-        with(homeAppointmentListResponse){
-            if (isLoading != null && isLoading == true) {
-                CustomToast.showToast(context, "Loading appointments")
-                return@LaunchedEffect
-            }
-
-            if (!error.isNullOrEmpty()) {
-                // error - response from the server
-                CustomToast.showToast(context, error.toString())
-                return@LaunchedEffect
-            }
-
-            data?.let { appointments ->
-                appointments.data?.get(0)?.let { appointmentList ->
-                    val aptList = appointmentList.appointmentList?.toTypedArray()
-                    if (!aptList.isNullOrEmpty()) {
-                        homeAppointmentListState = aptList.filter {
-                            it.appointmentStatus == initialAppointments.uppercase()
-                        }.toTypedArray()
-                    } else {
-                        delay(4000L)
-                        homeAppointmentListState?.let {
-                            if (it.isEmpty()) {
-                                CustomToast.showToast(context, "No appointments found")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-     */
-
     Column(
         modifier
             .padding(paddingValues)
             .fillMaxWidth()
-            .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 4.dp)) {
-        ComposableScheduleText()
-        ComposableAppointments(modifier, navController, context, homeAppointments, homeAppointmentList, isInternetAvailable, homeViewModel)
+            .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 4.dp)
+    ) {
+        ComposableAppointments(
+            modifier,
+            navController,
+            context,
+            homeAppointments,
+            homeAppointmentList,
+            isInternetAvailable,
+            homeViewModel
+        )
     }
 }
 
@@ -251,7 +228,9 @@ fun ComposableAppointments(
             .padding(top = 8.dp, bottom = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        val buttonModifier = Modifier.weight(1f).padding(horizontal = 4.dp)
+        val buttonModifier = Modifier
+            .weight(1f)
+            .padding(horizontal = 4.dp)
 
         AppointmentTypeButtonsComp(
             buttonClicked,
@@ -336,9 +315,9 @@ fun AppointmentTypeButtonsComp(
     val color2 = Color(0xFFB4C0FF) // unselected color
     val color3 = Color(0xFFB5C8FF)
     val customButtonColors = ButtonDefaults.buttonColors(
-        containerColor = if(buttonClicked == buttonType.name) color1 else color2,
+        containerColor = if (buttonClicked == buttonType.name) color1 else color2,
     )
-    val textColor = if(buttonClicked == buttonType.name) Color.White else Color.Black
+    val textColor = if (buttonClicked == buttonType.name) Color.White else Color.Black
     var homeAppointmentCopy by remember {
         mutableStateOf<Array<Appointment?>?>(emptyArray())
     }
@@ -389,7 +368,7 @@ fun AppointmentTypeButtonsComp(
                 }
             }
         }
-    ){
+    ) {
         Text(
             modifier = Modifier.basicMarquee(Int.MAX_VALUE),
             text = buttonType.name,
@@ -420,7 +399,7 @@ fun ComposableAppointmentsList(
     }
     val context = LocalContext.current
 
-    appointmentListData?.let{ arr ->
+    appointmentListData?.let { arr ->
         if (arr.isNotEmpty()) {
             // appointment list is guaranteed to be coming
             LazyColumn(
@@ -436,11 +415,11 @@ fun ComposableAppointmentsList(
                 }
             }
         } else {
-            LaunchedEffect(arr){
+            LaunchedEffect(arr) {
                 delay(2500L)
                 noAppointments = true
             }
-            if(noAppointments){
+            if (noAppointments) {
                 if (isInternetAvailable == ConnectivityObserver.Status.Unavailable) {
                     MedicoToast.showToast(context, NO_CONNECTION)
                 }
@@ -474,13 +453,13 @@ fun ComposableAppointmentsList(
     }
 
 
-    if(previousInternetStatus == ConnectivityObserver.Status.Lost && isInternetAvailable == ConnectivityObserver.Status.Available){
+    if (previousInternetStatus == ConnectivityObserver.Status.Lost && isInternetAvailable == ConnectivityObserver.Status.Available) {
         // earlier connection was lost and now connection is re-established : reload screen
         MedicoToast.showToast(context, "Connected - Reloading appointments")
         ComposableNoNetworkFound(context, modifier, homeViewModel, false)
     }
 
-    LaunchedEffect(isInternetAvailable){
+    LaunchedEffect(isInternetAvailable) {
         previousInternetStatus = isInternetAvailable
     }
 }
@@ -530,7 +509,8 @@ fun ComposablePatientUpperRow(appointment: Appointment) {
         ComposablePatientAvatar(
             Modifier
                 .weight(0.2f)
-                .align(Alignment.CenterVertically))
+                .align(Alignment.CenterVertically)
+        )
     }
 }
 
@@ -573,7 +553,11 @@ fun ComposablePatientAppointmentDate(appointment: Appointment) {
         Modifier.padding(2.dp, 15.dp, 5.dp, 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(painter = painter, contentDescription = "date of appointment", tint = Color(0xFF5A7271))
+        Icon(
+            painter = painter,
+            contentDescription = "date of appointment",
+            tint = Color(0xFF5A7271)
+        )
         Text(
             text = "${appointment.date}",
             Modifier.padding(start = 10.dp)
@@ -592,7 +576,11 @@ fun ComposablePatientAppointmentTime(appointment: Appointment) {
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(painter = painter, contentDescription = "time of appointment", tint = Color(0xFF5A7271))
+        Icon(
+            painter = painter,
+            contentDescription = "time of appointment",
+            tint = Color(0xFF5A7271)
+        )
         Text(
             text = "${appointment.time}",
             Modifier.padding(start = 10.dp),
@@ -611,7 +599,7 @@ fun ComposablePatientBalloonRow(appointment: Appointment, itemHeight: Dp) {
         mutableIntStateOf(getBalloonCount().toInt())
     }
 
-    if(!balloonStatus && balloonCount < 4){
+    if (!balloonStatus && balloonCount < 4) {
         MedicoUtils.Companion.Balloon.setBalloonStatus(true)
         updateBalloonCount()
         Balloon(
@@ -628,8 +616,7 @@ fun ComposablePatientBalloonRow(appointment: Appointment, itemHeight: Dp) {
             ComposablePatientLastRow(appointment, itemHeight)
             balloonWindow.showAlignBottom(xOff = 20)
         }
-    }
-    else{
+    } else {
         ComposablePatientLastRow(appointment, itemHeight)
     }
 }
@@ -648,7 +635,11 @@ fun ComposablePatientLastRow(appointment: Appointment, itemHeight: Dp) {
 
 
 @Composable
-fun ComposablePatientAppointmentStatus(modifier: Modifier, appointment: Appointment, itemHeight: Dp) {
+fun ComposablePatientAppointmentStatus(
+    modifier: Modifier,
+    appointment: Appointment,
+    itemHeight: Dp
+) {
     val context = LocalContext.current
     val appointmentPainter = painterResource(id = R.drawable.baseline_circle_24)
     var pressOffset by remember { mutableStateOf(DpOffset.Zero) }
@@ -672,7 +663,7 @@ fun ComposablePatientAppointmentStatus(modifier: Modifier, appointment: Appointm
     )
 
 
-    val patientStatusPainter = when(appointment.oldNewStatus){
+    val patientStatusPainter = when (appointment.oldNewStatus) {
         "new" -> {
             painterResource(id = R.drawable.new_patient)
         }
@@ -686,8 +677,8 @@ fun ComposablePatientAppointmentStatus(modifier: Modifier, appointment: Appointm
         }
     }
 
-    val (iconAlpha, iconTint) = when(appointment.appointmentStatus?.lowercase()){
-        AppointmentType.Confirmed.name.lowercase().replace("ed","") -> {
+    val (iconAlpha, iconTint) = when (appointment.appointmentStatus?.lowercase()) {
+        AppointmentType.Confirmed.name.lowercase().replace("ed", "") -> {
             alpha to Color.Green
         }
 
@@ -763,7 +754,7 @@ fun ComposablePatientAppointmentStatus(modifier: Modifier, appointment: Appointm
                 text = { Text(text = item) },
                 onClick = {
                     MedicoToast.showToast(
-                        context, when(index){
+                        context, when (index) {
                             0 -> "Cancelled"
                             1 -> "Archived"
                             2 -> "Postponed"
@@ -779,7 +770,7 @@ fun ComposablePatientAppointmentStatus(modifier: Modifier, appointment: Appointm
 
 
 enum class AppointmentType {
-    Confirmed, Completed, Cancelled , All
+    Confirmed, Completed, Cancelled, All
 }
 
 
@@ -787,6 +778,6 @@ enum class AppointmentType {
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    val apt = Appointment("Shivang", "D","Male","","","","COMPLETED")
+    val apt = Appointment("Shivang", "D", "Male", "", "", "", "COMPLETED")
 //    ComposablePatientLastRow(apt, 10.dp)
 }
