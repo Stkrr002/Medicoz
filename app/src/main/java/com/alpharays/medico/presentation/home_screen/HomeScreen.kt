@@ -106,7 +106,8 @@ fun HomeScreen(navController: NavController, modifier: Modifier) {
     }
 
     Surface(modifier = modifier.fillMaxSize()) {
-        CustomScaffold(navController = navController, isTopBarPresent = true, topBarContent = {
+        CustomScaffold(navController = navController, isTopBarPresent = true, topBarContent =
+        {
             TopAppBar(
                 navController = navController
             )
